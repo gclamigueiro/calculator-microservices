@@ -6,3 +6,6 @@
 
 # Delete a resource
 ```kubectl -n argocd  delete configmap/github-cm```
+
+# Get a resource
+kubectl -n argocd get ApplicationSet

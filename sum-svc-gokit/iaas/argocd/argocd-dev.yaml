@@ -12,6 +12,6 @@ spec:
     helm:
       valueFiles:
       - values-dev.yaml
-    path: ./iaas/helm
-    repoURL: git@github.com:gclamigueiro/sum-svc-gokit
+    path: ./sum-svc-gokit/iaas/helm
+    repoURL: git@github.com:gclamigueiro/calculator-microservices
     targetRevision: develop
