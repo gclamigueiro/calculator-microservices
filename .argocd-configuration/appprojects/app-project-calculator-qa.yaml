@@ -1,0 +1,55 @@
+# Projects provide a logical grouping of applications,
+# Provide the following features:
+#   restrict what may be deployed (trusted Git source repositories)
+#   restrict where apps may be deployed to (destination clusters and namespaces)
+#   restrict what kinds of objects may or may not be deployed (e.g. RBAC, CRDs, DaemonSets, NetworkPolicy etc...)
+#   defining project roles to provide application RBAC (bound to OIDC groups and/or JWT tokens)
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: calculator-services-qa
+  namespace: argocd
+  # Finalizer that ensures that project is not deleted until it is not referenced by any application
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  description: Calculator Services Development Enviroment
+  # Allow manifests to deploy from any Git repos
+  sourceRepos:
+  - '*'
+  # Only permit applications to deploy to the guestbook namespace in the same cluster
+  destinations:
+  - namespace: qa
+    server: https://kubernetes.default.svc
+  - namespace: argocd
+    server: https://kubernetes.default.svc   
+  # Deny all cluster-scoped resources from being created, except for Namespace
+  clusterResourceWhitelist:
+  - group: ''
+    kind: Namespace
+  # Allow all namespaced-scoped resources to be created, except for ResourceQuota, LimitRange, NetworkPolicy
+  namespaceResourceBlacklist:
+  - group: ''
+    kind: ResourceQuota
+  - group: ''
+    kind: LimitRange
+  - group: ''
+    kind: NetworkPolicy
+  roles:
+  # A role which provides read-only access to all applications in the project
+  - name: read-only
+    description: Read-only privileges to calculator-services-dev
+    policies:
+    - p, proj:calculator-services-dev:read-only, applications, get, calculator-services-dev/*, allow
+    groups:
+    - my-oidc-group
+  - name: admin
+    description: Admin privileges to calculator-services-dev
+    policies:
+    - p, proj:calculator-services-dev:admin, applications, get,    calculator-services-dev/*, allow
+    - p, proj:calculator-services-dev:admin, applications, create, calculator-services-dev/*, allow
+    - p, proj:calculator-services-dev:admin, applications, update, calculator-services-dev/*, allow
+    - p, proj:calculator-services-dev:admin, applications, delete, calculator-services-dev/*, allow
+    groups:
+    - my-oidc-group    
+

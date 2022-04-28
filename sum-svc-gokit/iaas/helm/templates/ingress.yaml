@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ .Values.name }}-ing
+  annotations:
+    ingress.kubernetes.io/rewrite-target: /
+
+spec:
+  rules:
+    - host: localhost
+      http:
+        paths:
+          - path: /v1/calculator
+            backend:
+              serviceName: {{ .Values.name }}-v1-svc
+              servicePort: 8080
+

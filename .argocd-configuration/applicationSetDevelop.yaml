@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: calculator-services-dev
+spec:
+  generators:
+  - git:
+      repoURL: git@github.com:gclamigueiro/calculator-microservices
+      revision: HEAD
+      directories:
+      - path: ./*
+  template:
+    metadata:
+      name: '{{path[0]}}-dev'
+      namespace: argocd
+    spec:
+      project: calculator-services-dev
+      source:
+        repoURL: git@github.com:gclamigueiro/calculator-microservices
+        targetRevision: develop
+        path: '{{path}}/iaas/helm'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: 'dev'

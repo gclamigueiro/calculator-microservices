@@ -1,0 +1,9 @@
+name: sum-svc-gokit
+
+## define the image to execute with the Deployment 
+image:
+  tag: latest
+
+config:
+  port: 8080
+

@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sum-svc-gokit-qa
+  namespace: argocd
+spec:
+  destination:
+    namespace: qa
+    server: https://kubernetes.default.svc
+  project: calculator-services-qa
+  source:
+    helm:
+      valueFiles:
+      - values-qa.yaml
+    path: ./iaas/helm
+    repoURL: git@github.com:gclamigueiro/sum-svc-gokit
+    targetRevision: main
