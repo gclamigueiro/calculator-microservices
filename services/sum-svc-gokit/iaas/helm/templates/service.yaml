@@ -11,9 +11,9 @@ metadata:
 spec:
   ports:
     - name: http
-      port: "{{ .Values.config.port }}"
+      port: {{ .Values.config.port }}
       protocol: TCP
-      targetPort: "{{ .Values.config.port }}"
+      targetPort: {{ .Values.config.port }}
   selector:
     app.kubernetes.io/name: {{.Values.name}}
     app.kubernetes.io/version: "1.0.0"
