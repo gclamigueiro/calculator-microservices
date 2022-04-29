@@ -10,7 +10,7 @@ on:
       - 'services/sum-svc-gokit/**'  
     branches:
       - 'main'
-        'develop'
+      - 'develop'
 
 ## List the steps to be executed by the workflow
 jobs:
