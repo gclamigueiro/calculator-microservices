@@ -7,7 +7,7 @@ name: DockerBuild
 on:
   push:
     paths:
-      - 'sum-svc-gokit/**'  
+      - 'services/sum-svc-gokit/**'  
     branches:
       - 'main'
         'develop'

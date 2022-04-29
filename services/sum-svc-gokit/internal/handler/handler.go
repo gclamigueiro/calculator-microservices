@@ -14,7 +14,7 @@ func NewHttpHandler(sumEndpoint endpoint.Endpoint) {
 
 	sumHandler := httptransport.NewServer(
 		sumEndpoint,
-		decodeUppercaseRequest,
+		decodeRequest,
 		encodeResponse,
 	)
 
@@ -22,7 +22,7 @@ func NewHttpHandler(sumEndpoint endpoint.Endpoint) {
 
 }
 
-func decodeUppercaseRequest(_ context.Context, r *http.Request) (interface{}, error) {
+func decodeRequest(_ context.Context, r *http.Request) (interface{}, error) {
 	var request entity.SumRequest
 	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
 		return nil, err

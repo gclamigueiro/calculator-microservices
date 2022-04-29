@@ -12,7 +12,7 @@ spec:
       - path: services/*
   template:
     metadata:
-      name: '{{path[0]}}-dev'
+      name: '{{path.basename}}-dev'
       namespace: argocd
     spec:
       destination:
@@ -27,6 +27,6 @@ spec:
         helm:
           valueFiles:
           - values-dev.yaml
-        path: './{{path[0]}}/iaas/helm'
+        path: './services/{{path.basename}}/iaas/helm'
         repoURL: git@github.com:gclamigueiro/calculator-microservices
         targetRevision: develop
