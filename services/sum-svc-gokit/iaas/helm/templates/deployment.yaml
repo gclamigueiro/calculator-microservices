@@ -4,6 +4,7 @@ kind: Deployment
 metadata:
   labels:
     app: {{ .Values.name }}
+    run:  {{ .Values.name }}
   name: {{ .Values.name }}-deploy
   namespace: {{ .Values.namespace }}  
 spec:
@@ -20,6 +21,7 @@ spec:
     metadata:
       labels:
         app: {{ .Values.name }}
+        run:  {{ .Values.name }}
     spec:
       containers:
       - image: gcamps/{{ .Values.name }}:latest
