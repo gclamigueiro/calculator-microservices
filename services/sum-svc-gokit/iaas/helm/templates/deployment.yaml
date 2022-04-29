@@ -10,7 +10,10 @@ spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ .Values.name }}
+      app.kubernetes.io/name: {{ .Values.name }}
+      app.kubernetes.io/version: "1.0.0"
+      app.kubernetes.io/component: services
+      app.kubernetes.io/part-of: calculator
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -19,7 +22,10 @@ spec:
   template:
     metadata:
       labels:
-        app: {{ .Values.name }}
+        app.kubernetes.io/name: {{ .Values.name }}
+        app.kubernetes.io/version: "1.0.0"
+        app.kubernetes.io/component: services
+        app.kubernetes.io/part-of: calculator
     spec:
       containers:
       - image: gcamps/{{ .Values.name }}:latest
