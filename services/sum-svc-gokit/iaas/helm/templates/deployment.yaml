@@ -2,10 +2,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    app.kubernetes.io/name: {{ .Values.name }}
-    app: {{ .Values.name }}
-    run:  {{ .Values.name }}
   name: {{ .Values.name }}-deploy
   namespace: {{ .Values.namespace }}  
 spec:
