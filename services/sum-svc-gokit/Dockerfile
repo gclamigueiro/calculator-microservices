@@ -2,7 +2,7 @@ FROM golang:alpine AS build
 LABEL maintainer=gclamigueiro
 
 WORKDIR /app
-COPY . .
+COPY ./services/sum-svc-gokit .
 RUN go build ./cmd/main.go
 
 ENTRYPOINT [ "/app/main" ][]
