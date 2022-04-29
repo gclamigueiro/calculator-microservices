@@ -9,3 +9,6 @@
 
 # Get a resource
 kubectl -n argocd get ApplicationSet
+
+# Describe a resource
+kubectl -n argocd describe applicationset/calculator-services-dev

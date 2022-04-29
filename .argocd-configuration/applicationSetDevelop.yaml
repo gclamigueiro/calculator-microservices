@@ -7,9 +7,9 @@ spec:
   generators:
   - git:
       repoURL: git@github.com:gclamigueiro/calculator-microservices
-      revision: HEAD
+      revision: develop
       directories:
-      - path: /*
+      - path: services/*
   template:
     metadata:
       name: '{{path[0]}}-dev'
@@ -19,6 +19,10 @@ spec:
         namespace: dev
         server: https://kubernetes.default.svc    
       project: calculator-services-dev
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true      
       source:
         helm:
           valueFiles:
