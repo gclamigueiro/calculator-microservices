@@ -10,5 +10,11 @@ In a real scenarios this images would be saved in a private registry.
 - Create a workflows folder inside .github folder
 - Create a yml file would describe the steps to performs the operations. Like, code build, test, etc
 
+You can check the ```./.github/workflows/docker-build.yml```
 
-You can check the ```./.github/workflows/docker-build.yml``` inside de projects
+- In the github repo it is neccesary create two variables with the DockerHub login information
+  - DOCKERHUB_USERNAME
+  - DOCKERHUB_TOKEN
+
+
+![CREATE SECRETS](./images/create-secret-github-action.PNG "Create Secret Github")
