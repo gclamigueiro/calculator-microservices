@@ -2,8 +2,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    app: {{ .Values.name }}
   name: {{ .Values.name }}-deploy
   namespace: {{ .Values.namespace }}  
 spec:
@@ -11,6 +9,7 @@ spec:
   selector:
     matchLabels:
       app: {{ .Values.name }}
+      run:  {{ .Values.name }}
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -19,7 +18,9 @@ spec:
   template:
     metadata:
       labels:
+        app.kubernetes.io/name: {{ .Values.name }}
         app: {{ .Values.name }}
+        run:  {{ .Values.name }}
     spec:
       containers:
       - image: gcamps/{{ .Values.name }}:latest

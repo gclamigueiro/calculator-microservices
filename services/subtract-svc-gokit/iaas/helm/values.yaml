@@ -7,3 +7,4 @@ image:
 config:
   port: 8080
 
+path: "/v1/calculator/subtract"

@@ -10,8 +10,9 @@ spec:
     - host: localhost
       http:
         paths:
-          - path: /v1/calculator
+          - path: {{ .Values.path }}
             backend:
               serviceName: {{ .Values.name }}-v1-svc
               servicePort: {{ .Values.config.port }}
+
 

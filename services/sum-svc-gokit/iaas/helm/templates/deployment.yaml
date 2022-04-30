@@ -8,7 +8,6 @@ spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ .Values.name }}
       app: {{ .Values.name }}
       run:  {{ .Values.name }}
   strategy:
