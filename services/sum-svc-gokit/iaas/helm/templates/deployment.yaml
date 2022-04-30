@@ -9,7 +9,6 @@ spec:
   selector:
     matchLabels:
       app: {{ .Values.name }}
-      run:  {{ .Values.name }}
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -20,7 +19,6 @@ spec:
       labels:
         app.kubernetes.io/name: {{ .Values.name }}
         app: {{ .Values.name }}
-        run:  {{ .Values.name }}
     spec:
       containers:
       - image: gcamps/{{ .Values.name }}:latest
