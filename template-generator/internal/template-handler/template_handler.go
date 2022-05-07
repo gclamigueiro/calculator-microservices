@@ -3,11 +3,11 @@ package template_handler
 import (
 	"bytes"
 	"errors"
-	"fmt"
 	"io/fs"
 	"io/ioutil"
 	"os"
 	"path"
+	"path/filepath"
 	"text/template"
 )
 
@@ -36,8 +36,10 @@ func NewFileProcessor() FileProcessor {
 
 func (f *fileProcessor) CreateInitialDirectory(src, dest string) error {
 
+	// First, remove the destination directory in case exists
+	os.RemoveAll(dest)
+
 	if err := os.MkdirAll(dest, os.FileMode(0764)); err != nil {
-		fmt.Printf("Error creando directorio de proyecto")
 		return errors.New("Error creando directorio de proyecto" + " // " + err.Error())
 	}
 
@@ -61,6 +63,7 @@ func (f *fileProcessor) proccessDirectory(src string, files []fs.FileInfo, conte
 		filePath := path.Join(src, file.Name())
 		_, ok := excludedFiles[filePath]
 		if ok {
+			renameFiles(file, filePath)
 			continue
 		}
 
@@ -88,7 +91,6 @@ func (f *fileProcessor) ApplyTemplateToFile(workPath string, templateContext int
 	}
 
 	resultingFileName := workPath[:len(workPath)-4]
-
 	resultingFile, err := os.Create(resultingFileName)
 	if err != nil {
 		return errors.New(ErrCreatingFileFromTemplate + " // " + err.Error())
@@ -118,10 +120,24 @@ func process(t *template.Template, context interface{}) (string, error) {
 	var tmplBytes bytes.Buffer
 
 	ctx := context.(map[string]string)
-	fmt.Println("CCCC", ctx)
 	if err := t.Execute(&tmplBytes, ctx); err != nil {
 		return "", errors.New(ErrTemplateExecute + " // " + err.Error())
 	}
 
 	return tmplBytes.String(), nil
+}
+
+func renameFiles(file fs.FileInfo, src string) {
+	if file.IsDir() {
+		files, _ := ioutil.ReadDir(src)
+		for _, file := range files {
+			filePath := path.Join(src, file.Name())
+			renameFiles(file, filePath)
+		}
+	} else {
+		if filepath.Ext(src) == ".tpl" {
+			os.Rename(src, src[:len(src)-4])
+		}
+	}
+
 }
