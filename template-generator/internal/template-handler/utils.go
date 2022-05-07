@@ -8,8 +8,6 @@ import (
 	"path"
 )
 
-//TODO: Escribir tests y refactorizar
-
 // CopyFile copies a single file from src to dst
 func CopyFile(src, dst string) error {
 	var err error

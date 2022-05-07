@@ -2,6 +2,7 @@ package generator
 
 import "fmt"
 
+// registered Generators
 var registeredGenerators = make(map[string]Generator)
 
 // interface that define the methods that a generator must implement to create a service template
@@ -11,17 +12,12 @@ type Generator interface {
 	ExcludedFiles(fullProjectPath string) map[string]int
 }
 
-/*type Parameter interface {
-	GetName() string
-	GetType() string
-	GetRegex() string
-}*/
-
 // register a generator
 func register(name string, generator Generator) {
 	registeredGenerators[name] = generator
 }
 
+// get the list of registered generators
 func GetRegisteredGeneratorsKeys() []string {
 	keys := make([]string, 0, len(registeredGenerators))
 	for k := range registeredGenerators {
@@ -30,6 +26,7 @@ func GetRegisteredGeneratorsKeys() []string {
 	return keys
 }
 
+// get a generator
 func GetGenerator(name string) (Generator, error) {
 
 	val, ok := registeredGenerators[name]

@@ -1,4 +1,6 @@
-**Template Microservice with {{.APIName}}**
+**Microservice {{.APIName}}**
+
+Generated with the Template Generator
 
 ***Run the example***  
 Execute the application

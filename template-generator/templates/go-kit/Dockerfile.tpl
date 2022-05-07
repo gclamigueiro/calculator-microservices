@@ -8,6 +8,6 @@ RUN go build ./cmd/main.go
 ENTRYPOINT [ "/app/main" ][]
 
 # to create image
-# docker build -t sum-svc-gokit .
+# docker build -t {{.APIName}} .
 # to run image
-# docker run -d -p 8080:8080 sum-svc-gokit
+# docker run -d -p 8080:8080 {{.APIName}}

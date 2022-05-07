@@ -8,7 +8,8 @@ import (
 )
 
 func init() {
-	register("go-kit", &GoKitGenerator{})
+	generator := &GoKitGenerator{}
+	register(generator.GetKey(), generator)
 }
 
 type GoKitGenerator struct {
@@ -19,20 +20,20 @@ func (g *GoKitGenerator) GetKey() string {
 }
 
 func (g *GoKitGenerator) Process(outputPath string, parameters map[string]string) error {
-	fmt.Println("Processing Go Kit Generator")
+	fmt.Println("Processing Go Kit Service Template")
 
 	templateProcessor := templateHandler.NewFileProcessor()
 
 	fullTemplatePath := path.Join("templates", g.GetKey())
 	fullProjectPath := path.Join(outputPath, parameters["APIName"])
 
-	err := templateProcessor.CreateInitialDirectory(fullTemplatePath, fullProjectPath)
+	err := templateProcessor.CopyTemplate(fullTemplatePath, fullProjectPath)
 
 	if err != nil {
 		return err
 	}
 
-	if err := templateProcessor.ProcessMultipleTemplates(fullProjectPath, parameters, g.ExcludedFiles(fullProjectPath)); err != nil {
+	if err := templateProcessor.ProcessTemplates(fullProjectPath, parameters, g.ExcludedFiles(fullProjectPath)); err != nil {
 		return err
 	}
 

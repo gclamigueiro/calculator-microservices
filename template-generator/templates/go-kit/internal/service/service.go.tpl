@@ -8,7 +8,7 @@ type Service interface {
 // sumService is a concrete implementation of SumService
 type service struct{}
 
-func NewSumService() Service {
+func NewService() Service {
 	return &service{}
 }
 

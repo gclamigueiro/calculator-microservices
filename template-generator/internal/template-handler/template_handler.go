@@ -1,7 +1,6 @@
 package template_handler
 
 import (
-	"bytes"
 	"errors"
 	"io/fs"
 	"io/ioutil"
@@ -12,19 +11,19 @@ import (
 )
 
 var (
-	ErrParseFile                = "Archivo no existe o path invalido"
-	ErrNilContext               = "Contexto no debe ser nil"
-	ErrTemplateExecute          = "Error ejecutando template"
-	ErrCreatingFileFromTemplate = "Error creando archivo desde template"
-	ErrWritingFileFromTemplate  = "Error escribiendo archivo desde template"
+	ErrParseFile                 = "Error parsing file template"
+	ErrNilContext                = "No parameters provided"
+	ErrTemplateExecute           = "Error ejecutando template"
+	ErrCreatingFileFromTemplate  = "Error creating file from template"
+	ErrWritingFileFromTemplate   = "Error writing file from template"
+	ErrCreatingDestinationFolder = "Error Creating Destination Folder"
 )
 
 // FileProcessor interfaz de procesador de archivos de plantillas
 type FileProcessor interface {
-	CreateInitialDirectory(src, dest string) error
-	ProcessMultipleTemplates(basePath string, context interface{}, excludedFiles map[string]int) error
+	CopyTemplate(src, dest string) error
+	ProcessTemplates(basePath string, context interface{}, excludedFiles map[string]int) error
 	ApplyTemplateToFile(workPath string, templateContext interface{}) error
-	ProcessFile(path string, context interface{}) (string, error)
 }
 
 type fileProcessor struct{}
@@ -34,21 +33,23 @@ func NewFileProcessor() FileProcessor {
 	return &fileProcessor{}
 }
 
-func (f *fileProcessor) CreateInitialDirectory(src, dest string) error {
+func (f *fileProcessor) CopyTemplate(src, dest string) error {
 
 	// First, remove the destination directory in case exists
 	os.RemoveAll(dest)
 
 	if err := os.MkdirAll(dest, os.FileMode(0764)); err != nil {
-		return errors.New("Error creando directorio de proyecto" + " // " + err.Error())
+		return errors.New(ErrCreatingDestinationFolder + "->" + err.Error())
 	}
 
-	CopyDir(src, dest)
+	if err := CopyDir(src, dest); err != nil {
+		return errors.New(ErrCreatingDestinationFolder + "->" + err.Error())
+	}
 
 	return nil
 }
 
-func (f *fileProcessor) ProcessMultipleTemplates(basePath string, context interface{}, excludedFiles map[string]int) error {
+func (f *fileProcessor) ProcessTemplates(basePath string, context interface{}, excludedFiles map[string]int) error {
 
 	if context == nil {
 		return errors.New(ErrNilContext)
@@ -84,47 +85,29 @@ func (f *fileProcessor) proccessDirectory(src string, files []fs.FileInfo, conte
 
 func (f *fileProcessor) ApplyTemplateToFile(workPath string, templateContext interface{}) error {
 
-	processedContent, err := f.ProcessFile(workPath, templateContext)
-
-	if err != nil {
-		return err
-	}
-
 	resultingFileName := workPath[:len(workPath)-4]
 	resultingFile, err := os.Create(resultingFileName)
 	if err != nil {
 		return errors.New(ErrCreatingFileFromTemplate + " // " + err.Error())
 	}
 
-	if _, err := resultingFile.Write([]byte(processedContent)); err != nil {
-		return errors.New(ErrWritingFileFromTemplate + " // " + err.Error())
+	ctx := templateContext.(map[string]string)
+
+	// proccessing template
+	// processedContent, err := f.ProcessFile(workPath, templateContext)
+	tmpl, err := template.ParseFiles(workPath)
+	if err != nil {
+		return errors.New(ErrParseFile + " // " + err.Error())
 	}
 
+	if err := tmpl.Execute(resultingFile, ctx); err != nil {
+		return errors.New(ErrTemplateExecute + " // " + err.Error())
+	}
+
+	// remove .tpl extension
 	os.Remove(workPath)
 
 	return nil
-}
-
-func (f *fileProcessor) ProcessFile(fileName string, context interface{}) (string, error) {
-
-	tmpl, err := template.ParseFiles(fileName)
-	if err != nil {
-		return "", errors.New(ErrParseFile + " // " + err.Error())
-	}
-
-	return process(tmpl, context)
-}
-
-func process(t *template.Template, context interface{}) (string, error) {
-
-	var tmplBytes bytes.Buffer
-
-	ctx := context.(map[string]string)
-	if err := t.Execute(&tmplBytes, ctx); err != nil {
-		return "", errors.New(ErrTemplateExecute + " // " + err.Error())
-	}
-
-	return tmplBytes.String(), nil
 }
 
 func renameFiles(file fs.FileInfo, src string) {

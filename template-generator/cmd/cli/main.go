@@ -3,12 +3,13 @@ package main
 import (
 	"fmt"
 
+	cliHandler "github.com/gclamigueiro/template-generator/internal/cli-handler"
 	"github.com/gclamigueiro/template-generator/internal/generator"
 )
 
 func main() {
 
-	/*parameters := cliHandler.CLIHandlerParameters{}
+	parameters := cliHandler.CLIHandlerParameters{}
 	servicesTypes := generator.GetRegisteredGeneratorsKeys()
 	parameters = append(
 		parameters,
@@ -41,14 +42,7 @@ func main() {
 			cliHandler.NotEmpty()))           // validation
 
 	cliH := cliHandler.NewCliHandler(parameters)
-	values := cliH.StartCLI()*/
-
-	// after get the parameter start the generator
-	values := map[string]string{
-		"type":             "go-kit",
-		"output_directory": "./output",
-		"APIName":          "tesing-api",
-	}
+	values := cliH.StartCLI()
 
 	selectedGenerator, err := generator.GetGenerator(values["type"])
 
@@ -61,5 +55,7 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 	}
+
+	fmt.Println("🎉 Project files generated 🎉")
 
 }
