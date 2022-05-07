@@ -8,13 +8,14 @@ var registeredGenerators = make(map[string]Generator)
 type Generator interface {
 	GetKey() string
 	Process(outputPath string, parameters map[string]string) error
+	ExcludedFiles(fullProjectPath string) map[string]int
 }
 
-type Parameter interface {
+/*type Parameter interface {
 	GetName() string
 	GetType() string
 	GetRegex() string
-}
+}*/
 
 // register a generator
 func register(name string, generator Generator) {

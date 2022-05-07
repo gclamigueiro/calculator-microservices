@@ -32,9 +32,15 @@ func (g *GoKitGenerator) Process(outputPath string, parameters map[string]string
 		return err
 	}
 
-	if err := templateProcessor.ProcessMultipleTemplates(fullProjectPath, parameters); err != nil {
+	if err := templateProcessor.ProcessMultipleTemplates(fullProjectPath, parameters, g.ExcludedFiles(fullProjectPath)); err != nil {
 		return err
 	}
 
 	return nil
+}
+
+func (g *GoKitGenerator) ExcludedFiles(fullProjectPath string) map[string]int {
+	return map[string]int{
+		fullProjectPath + "/iaas/helm/templates": 1,
+	}
 }

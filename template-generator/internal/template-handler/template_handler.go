@@ -22,7 +22,7 @@ var (
 // FileProcessor interfaz de procesador de archivos de plantillas
 type FileProcessor interface {
 	CreateInitialDirectory(src, dest string) error
-	ProcessMultipleTemplates(basePath string, context interface{}) error
+	ProcessMultipleTemplates(basePath string, context interface{}, excludedFiles map[string]int) error
 	ApplyTemplateToFile(workPath string, templateContext interface{}) error
 	ProcessFile(path string, context interface{}) (string, error)
 }
@@ -46,22 +46,27 @@ func (f *fileProcessor) CreateInitialDirectory(src, dest string) error {
 	return nil
 }
 
-func (f *fileProcessor) ProcessMultipleTemplates(basePath string, context interface{}) error {
+func (f *fileProcessor) ProcessMultipleTemplates(basePath string, context interface{}, excludedFiles map[string]int) error {
 
 	if context == nil {
 		return errors.New(ErrNilContext)
 	}
 
 	files, _ := ioutil.ReadDir(basePath)
-	return f.proccessDirectory(basePath, files, context)
+	return f.proccessDirectory(basePath, files, context, excludedFiles)
 }
 
-func (f *fileProcessor) proccessDirectory(src string, files []fs.FileInfo, context interface{}) error {
+func (f *fileProcessor) proccessDirectory(src string, files []fs.FileInfo, context interface{}, excludedFiles map[string]int) error {
 	for _, file := range files {
 		filePath := path.Join(src, file.Name())
+		_, ok := excludedFiles[filePath]
+		if ok {
+			continue
+		}
+
 		if file.IsDir() {
 			children, _ := ioutil.ReadDir(filePath)
-			if err := f.proccessDirectory(filePath, children, context); err != nil {
+			if err := f.proccessDirectory(filePath, children, context, excludedFiles); err != nil {
 				return err
 			}
 
