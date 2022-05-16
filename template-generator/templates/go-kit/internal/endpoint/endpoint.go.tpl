@@ -2,11 +2,9 @@ package endpoint
 
 import (
 	"context"
-
 	"{{.APIName}}/internal/entity"
 	"{{.APIName}}/internal/service"
-
-	"{{.APIName}}/kit/endpoint"
+	"github.com/go-kit/kit/endpoint"
 )
 
 func MakeEndpoint(svc service.Service) endpoint.Endpoint {

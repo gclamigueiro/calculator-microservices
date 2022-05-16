@@ -6,16 +6,21 @@ import (
 
 	"github.com/go-kit/log"
 
-	"{{.APIName}}/internal/endpoint"
-	"{{.APIName}}/internal/handler"
-	"{{.APIName}}/internal/service"
+	sumClient "multiple-operation-svc-go-kit/internal/clients/sum-client"
+	"multiple-operation-svc-go-kit/internal/endpoint"
+	"multiple-operation-svc-go-kit/internal/handler"
+	"multiple-operation-svc-go-kit/internal/service"
 
-    kitprometheus "github.com/go-kit/kit/metrics/prometheus"
+	apiConfig "multiple-operation-svc-go-kit/cmd/config"
+
+	kitprometheus "github.com/go-kit/kit/metrics/prometheus"
 	stdprometheus "github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 func main() {
+
+	apiConfig := apiConfig.GetAPIConfig()
 
 	logger := log.NewLogfmtLogger(os.Stderr)
 
@@ -37,18 +42,21 @@ func main() {
 		Subsystem: "my_service",
 		Name:      "count_result",
 		Help:      "The result of each count method.",
-	}, []string{}) // no fields here
+	}, []string{})
 
-	svc := service.NewService()
+	//craeting clients
+	sClient := sumClient.NewClient(apiConfig.UriSumService)
+
+	svc := service.NewService(sClient)
 	svc = service.NewLoggingMiddleware(logger, svc)
 	svc = service.NewInstrumentingMiddleware(requestCount, requestLatency, countResult, svc)
 
 	endp := endpoint.MakeEndpoint(svc)
-	endp = endpoint.LoggingMiddleware(log.With(logger, "method", "sum"))(endp)
+	endp = endpoint.LoggingMiddleware(log.With(logger, "method", "multiple-operation"))(endp)
 
 	handler.NewHttpHandler(endp)
 
 	http.Handle("/metrics", promhttp.Handler())
 
-	logger.Log("exit", http.ListenAndServe(":8080", nil))
+	logger.Log("exit", http.ListenAndServe(":"+apiConfig.Port, nil))
 }

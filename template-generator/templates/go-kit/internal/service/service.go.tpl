@@ -1,8 +1,12 @@
 package service
 
+import (
+	"context"
+)
+
 // SumService provides operations on strings.
 type Service interface {
-	Call(Param1, Param2 int) int
+	Call(ctx context.Context, Param1, Param2 int) int
 }
 
 // sumService is a concrete implementation of SumService
@@ -12,7 +16,7 @@ func NewService() Service {
 	return &service{}
 }
 
-func (service) Call(Param1, Param2 int) int {
+func (s *service) Call(ctx context.Context, Param1, Param2 int) int {
 	// Do some work
 	return 0
 }

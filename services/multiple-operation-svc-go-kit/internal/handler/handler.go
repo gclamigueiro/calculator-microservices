@@ -3,8 +3,9 @@ package handler
 import (
 	"context"
 	"encoding/json"
+	"multiple-operation-svc-go-kit/internal/entity"
 	"net/http"
-	"{{.APIName}}/internal/entity"
+
 	"github.com/go-kit/kit/endpoint"
 	httptransport "github.com/go-kit/kit/transport/http"
 )
@@ -17,7 +18,7 @@ func NewHttpHandler(sumEndpoint endpoint.Endpoint) {
 		encodeResponse,
 	)
 
-	http.Handle("/", handler)
+	http.Handle("/v1/calculator/service", handler)
 
 }
 

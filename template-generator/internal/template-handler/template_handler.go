@@ -13,13 +13,12 @@ import (
 var (
 	ErrParseFile                 = "Error parsing file template"
 	ErrNilContext                = "No parameters provided"
-	ErrTemplateExecute           = "Error ejecutando template"
+	ErrTemplateExecute           = "Error executing template"
 	ErrCreatingFileFromTemplate  = "Error creating file from template"
 	ErrWritingFileFromTemplate   = "Error writing file from template"
-	ErrCreatingDestinationFolder = "Error Creating Destination Folder"
+	ErrCreatingDestinationFolder = "Error creating Destination Folder"
 )
 
-// FileProcessor interfaz de procesador de archivos de plantillas
 type FileProcessor interface {
 	CopyTemplate(src, dest string) error
 	ProcessTemplates(basePath string, context interface{}, excludedFiles map[string]int) error

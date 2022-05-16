@@ -1,13 +1,15 @@
-**Template Microservice with tesing-api**
+# Template Generator
 
-***Run the example***  
-Execute the application
+This app helps to generate a service template. 
 
-```
-go run  .\cmd\main.go
-```
+https://microservices.io/patterns/microservice-chassis.html
 
-Request example
+## Generate a Service 
+### Via CLI
 
-curl -XPOST -d'{"param1":5, "param2": 3}' localhost:8080/
+- Download de template generator service
+- Run with ```go run .\cmd\cli\main.go```
+- Input the required parameters  
+- A project template with the specifiqued name is generated
+
 

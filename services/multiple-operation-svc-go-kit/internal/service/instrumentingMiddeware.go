@@ -1,7 +1,9 @@
 package service
 
 import (
+	"context"
 	"time"
+
 	"github.com/go-kit/kit/metrics"
 )
 
@@ -17,13 +19,13 @@ func NewInstrumentingMiddleware(requestCount metrics.Counter, requestLatency met
 	return &instrumentingMiddleware{requestCount, requestLatency, countResult, svc}
 }
 
-func (mw instrumentingMiddleware) Call(Param1, Param2 int) (output int) {
+func (mw instrumentingMiddleware) Call(ctx context.Context, Param1, Param2 int) (output int) {
 	defer func(begin time.Time) {
 		lvs := []string{"method", "sum", "error", "false"}
 		mw.requestCount.With(lvs...).Add(1)
 		mw.requestLatency.With(lvs...).Observe(time.Since(begin).Seconds())
 	}(time.Now())
 
-	output = mw.next.Call(Param1, Param2)
+	output = mw.next.Call(ctx, Param1, Param2)
 	return
 }
