@@ -44,7 +44,7 @@ func main() {
 		Help:      "The result of each count method.",
 	}, []string{})
 
-	//craeting clients
+	//creating clients
 	sClient := sumClient.NewClient(apiConfig.UriSumService)
 
 	svc := service.NewService(sClient)

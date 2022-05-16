@@ -7,7 +7,6 @@ import (
 )
 
 func configEntries() []configurator.ConfigEntry {
-	//TODO: Agregar entradas de configuracion adicionales requeridas para el servicio
 	return []configurator.ConfigEntry{
 		{
 			VariableName: "port",
@@ -30,7 +29,6 @@ type APIConfig struct {
 
 func GetAPIConfig() *APIConfig {
 
-	//Configuration for enviromental variables on the system
 	variables, err := configurator.ConfigureViper(configEntries())
 
 	if err != nil {
