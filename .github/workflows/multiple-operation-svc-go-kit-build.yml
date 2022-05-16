@@ -46,9 +46,9 @@ jobs:
         with:
           context: .
           platforms: linux/amd64,linux/arm64
-          file: ./services/sum-svc-gokit/Dockerfile
+          file: ./services/multiple-operation-svc-go-kit/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/sum-svc-gokit:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/multiple-operation-svc-go-kit:latest
       -
         name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
