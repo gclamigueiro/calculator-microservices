@@ -12,3 +12,6 @@ kubectl -n argocd get ApplicationSet
 
 # Describe a resource
 kubectl -n argocd describe applicationset/calculator-services-dev
+
+# Port forward
+kubectl -n dev port-forward deploy/multiple-operation-svc-go-kit-deploy 8080:8080

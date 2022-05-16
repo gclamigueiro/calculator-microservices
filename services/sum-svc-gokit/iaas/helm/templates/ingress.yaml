@@ -12,7 +12,7 @@ spec:
         paths:
           - path: {{ .Values.path }}
             backend:
-              serviceName: {{ .Values.name }}-v1-svc
+              serviceName: {{ .Values.name }}-svc
               servicePort: {{ .Values.config.port }}
 
 
