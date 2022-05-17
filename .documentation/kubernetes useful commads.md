@@ -15,3 +15,4 @@ kubectl -n argocd describe applicationset/calculator-services-dev
 
 # Port forward
 kubectl -n dev port-forward deploy/multiple-operation-svc-go-kit-deploy 8080:8080
+kubectl -n dev port-forward service/sum-svc-gokit-svc 8080:8080

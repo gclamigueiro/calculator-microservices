@@ -23,10 +23,10 @@ spec:
     spec:
       containers:
       - name: {{ .Values.name }}
-        image: gcamps/{{ .Values.name }}:latest
+        image: {{ .Values.image.name }}:{{ .Values.image.tag }}
         imagePullPolicy: IfNotPresent
         ports:
-        - containerPort: 80
+        - containerPort: {{ .Values.port }}
         resources:
           requests:
             cpu: 50m

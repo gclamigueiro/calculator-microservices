@@ -2,9 +2,12 @@ name: sum-svc-gokit
 
 ## define the image to execute with the Deployment 
 image:
-  tag: latest
+  name: gcamps/sum-svc-gokit
+  tag:  latest
 
 config:
   port: 8080
 
-path: "/v1/calculator/sum"
+ingress:
+  host: "127.0.0.1:51219"
+  path: "/v1/calculator/sum"
