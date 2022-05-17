@@ -1,6 +1,5 @@
 name: sum-svc-gokit
 
-## define the image to execute with the Deployment 
 image:
   name: gcamps/sum-svc-gokit
   tag:  latest

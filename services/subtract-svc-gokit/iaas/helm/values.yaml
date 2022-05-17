@@ -1,10 +1,11 @@
 name: subtract-svc-gokit
 
-## define the image to execute with the Deployment 
 image:
-  tag: latest
+  name: gcamps/subtract-svc-gokit
+  tag:  latest
 
 config:
   port: 8080
 
-path: "/v1/calculator/subtract"
+ingress:
+  path: "/v1/calculator/subtract"

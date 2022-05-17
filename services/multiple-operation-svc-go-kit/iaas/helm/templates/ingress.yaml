@@ -7,10 +7,9 @@ metadata:
 
 spec:
   rules:
-    - host: localhost
-      http:
+    - http:
         paths:
-          - path: {{ .Values.path }}
+          - path: {{ .Values.ingress.path }}
             backend:
               serviceName: {{ .Values.name }}-svc
               servicePort: {{ .Values.config.port }}

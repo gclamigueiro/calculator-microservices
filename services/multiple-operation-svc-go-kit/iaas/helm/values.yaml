@@ -1,6 +1,5 @@
 name: multiple-operation-svc-go-kit
 
-## define the image to execute with the Deployment 
 image:
   name: gcamps/multiple-operation-svc-go-kit
   tag:  latest
@@ -8,4 +7,5 @@ image:
 config:
   port: 8080
 
-path: "/v1/calculator/service"
+ingress:
+  path: "/v1/calculator/multiple-operation"

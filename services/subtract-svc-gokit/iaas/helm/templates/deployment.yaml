@@ -3,7 +3,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Values.name }}-deploy
-  namespace: {{ .Values.namespace }}  
+  namespace: {{ .Values.namespace }} 
+  labels:
+    app: {{ .Values.name }}   
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
@@ -17,13 +19,14 @@ spec:
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: {{ .Values.name }}
         app: {{ .Values.name }}
     spec:
       containers:
-      - image: gcamps/{{ .Values.name }}:latest
+      - name: {{ .Values.name }}
+        image: {{ .Values.image.name }}:{{ .Values.image.tag }}
         imagePullPolicy: IfNotPresent
-        name: {{ .Values.name }}
+        ports:
+        - containerPort: {{ .Values.config.port }}
         resources:
           requests:
             cpu: 50m
