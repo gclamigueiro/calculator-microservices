@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: {{ .Values.name }}-ingress
+  name: {{ .Values.name }}-ing
   annotations:
     ingress.kubernetes.io/rewrite-target: /
 
