@@ -9,5 +9,4 @@ config:
   port: 8080
 
 ingress:
-  host: "127.0.0.1:51219"
   path: "/v1/calculator/sum"
