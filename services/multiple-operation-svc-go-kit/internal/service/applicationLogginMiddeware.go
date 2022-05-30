@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"multiple-operation-svc-go-kit/internal/entity"
 	"time"
 
 	"github.com/go-kit/log"
@@ -16,17 +17,17 @@ func NewLoggingMiddleware(logger log.Logger, svc Service) Service {
 	return &loggingMiddleware{logger, svc}
 }
 
-func (mw loggingMiddleware) Call(ctx context.Context, Param1, Param2 int) (output int) {
+func (mw loggingMiddleware) Call(ctx context.Context, operations []entity.Operation) (output []int, err []error) {
 	defer func(begin time.Time) {
 		mw.logger.Log(
-			"method", "uppercase",
-			"input", Param1, Param2,
+			"method", "multiple operations",
+			"input", operations,
 			"output", output,
 			"err", nil,
 			"took", time.Since(begin),
 		)
 	}(time.Now())
 
-	output = mw.next.Call(ctx, Param1, Param2)
+	output, err = mw.next.Call(ctx, operations)
 	return
 }

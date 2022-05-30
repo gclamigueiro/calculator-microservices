@@ -2,12 +2,12 @@ FROM golang:alpine AS build
 LABEL maintainer=gclamigueiro
 
 WORKDIR /app
-COPY ./services/{{.APIName}} .
+COPY ./services/{{.APINamespace}}{{.APIName}} .
 RUN go build ./cmd/main.go
 
 ENTRYPOINT [ "/app/main" ][]
 
 # to create image
-# docker build -t {{.APIName}} .
+# docker build -t {{.APINamespace}}{{.APIName}} .
 # to run image
-# docker run -d -p 8080:8080 {{.APIName}}
+# docker run -d -p 8080:8080 {{.APINamespace}}{{.APIName}}

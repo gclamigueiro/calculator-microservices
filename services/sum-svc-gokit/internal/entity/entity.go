@@ -1,11 +1,11 @@
 package entity
 
-type SumRequest struct {
+type Request struct {
 	A int `json:"a"`
 	B int `json:"b"`
 }
 
-type SumResponse struct {
+type Response struct {
 	R   int    `json:"r"`
 	Err string `json:"err,omitempty"`
 }

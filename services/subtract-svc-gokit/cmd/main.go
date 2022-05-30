@@ -6,15 +6,19 @@ import (
 
 	"github.com/go-kit/log"
 
+	apiConfig "github.com/gclamigueiro/subtract-svc-gokit/cmd/config"
 	"github.com/gclamigueiro/subtract-svc-gokit/internal/endpoint"
 	"github.com/gclamigueiro/subtract-svc-gokit/internal/handler"
 	"github.com/gclamigueiro/subtract-svc-gokit/internal/service"
+
 	kitprometheus "github.com/go-kit/kit/metrics/prometheus"
 	stdprometheus "github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 func main() {
+
+	apiConfig := apiConfig.GetAPIConfig()
 
 	logger := log.NewLogfmtLogger(os.Stderr)
 
@@ -38,16 +42,16 @@ func main() {
 		Help:      "The result of each count method.",
 	}, []string{}) // no fields here
 
-	svc := service.NewSubtractService()
+	svc := service.NewService()
 	svc = service.NewLoggingMiddleware(logger, svc)
 	svc = service.NewInstrumentingMiddleware(requestCount, requestLatency, countResult, svc)
 
-	sumEndpoint := endpoint.MakeSumEndpoint(svc)
-	sumEndpoint = endpoint.LoggingMiddleware(log.With(logger, "method", "subtract"))(sumEndpoint)
+	endp := endpoint.MakeEndpoint(svc)
+	endp = endpoint.LoggingMiddleware(log.With(logger, "method", "subtract"))(endp)
 
-	handler.NewHttpHandler(sumEndpoint)
+	handler.NewHttpHandler(endp)
 
 	http.Handle("/metrics", promhttp.Handler())
 
-	logger.Log("exit", http.ListenAndServe(":8080", nil))
+	logger.Log("exit", http.ListenAndServe(":"+apiConfig.Port, nil))
 }

@@ -6,5 +6,6 @@ metadata:
 data:
     PORT: "{{ .Values.config.port }}"
     URI_SUM_SERVICE: "http://sum-svc-gokit-svc:8080/"
+    URI_SUBTRACT_SERVICE: "http://subtract-svc-gokit-svc:8080/"
 
 

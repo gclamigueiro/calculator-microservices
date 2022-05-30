@@ -1,31 +1,31 @@
 package service
 
 import (
+	"context"
 	"time"
-
 	"github.com/go-kit/log"
 )
 
 type loggingMiddleware struct {
 	logger log.Logger
-	next   SumService
+	next   Service
 }
 
-func NewLoggingMiddleware(logger log.Logger, svc SumService) SumService {
+func NewLoggingMiddleware(logger log.Logger, svc Service) Service {
 	return &loggingMiddleware{logger, svc}
 }
 
-func (mw loggingMiddleware) Sum(A, B int) (output int) {
+func (mw loggingMiddleware) Call(ctx context.Context, Param1, Param2 int)  (output int, err error)  {
 	defer func(begin time.Time) {
 		mw.logger.Log(
-			"method", "uppercase",
-			"input", A, B,
+			"method", "call",
+			"input", Param1, Param2,
 			"output", output,
 			"err", nil,
 			"took", time.Since(begin),
 		)
 	}(time.Now())
 
-	output = mw.next.Sum(A, B)
+	output, err = mw.next.Call(ctx, Param1, Param2)
 	return
 }

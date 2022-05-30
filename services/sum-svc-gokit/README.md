@@ -1,5 +1,6 @@
-**Sum Microservice with go-kit**
+**Microservice github.com/gclamigueiro/sum-svc-gokit**
 
+Generated with the Template Generator
 
 ***Run the example***  
 Execute the application

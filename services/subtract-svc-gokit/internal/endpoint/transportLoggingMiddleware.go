@@ -2,7 +2,6 @@ package endpoint
 
 import (
 	"context"
-
 	kitendpoint "github.com/go-kit/kit/endpoint"
 	"github.com/go-kit/log"
 )

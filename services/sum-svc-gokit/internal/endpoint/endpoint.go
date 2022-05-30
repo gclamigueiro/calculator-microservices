@@ -8,10 +8,13 @@ import (
 	"github.com/go-kit/kit/endpoint"
 )
 
-func MakeSumEndpoint(svc service.SumService) endpoint.Endpoint {
-	return func(_ context.Context, request interface{}) (interface{}, error) {
-		req := request.(entity.SumRequest)
-		v := svc.Sum(req.A, req.B)
-		return entity.SumResponse{R: v, Err: ""}, nil
+func MakeEndpoint(svc service.Service) endpoint.Endpoint {
+	return func(ctx context.Context, request interface{}) (interface{}, error) {
+		req := request.(entity.Request)
+		v, err := svc.Call(ctx, req.A, req.B)
+		if err != nil {
+			return entity.Response{R: 0, Err: err.Error()}, nil
+		}
+		return entity.Response{R: v, Err: ""}, nil
 	}
 }

@@ -22,3 +22,14 @@ func NotEmpty() func(string) bool {
 		return true
 	}
 }
+
+func EndWith(endWith string) func(string) bool {
+	return func(input string) bool {
+		// if is empty do not validate nothing
+		if input == "" {
+			return true
+		}
+
+		return input[len(input)-len(endWith):] == endWith
+	}
+}

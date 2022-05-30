@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"multiple-operation-svc-go-kit/internal/entity"
 	"time"
 
 	"github.com/go-kit/kit/metrics"
@@ -19,13 +20,13 @@ func NewInstrumentingMiddleware(requestCount metrics.Counter, requestLatency met
 	return &instrumentingMiddleware{requestCount, requestLatency, countResult, svc}
 }
 
-func (mw instrumentingMiddleware) Call(ctx context.Context, Param1, Param2 int) (output int) {
+func (mw instrumentingMiddleware) Call(ctx context.Context, operations []entity.Operation) (output []int, err []error) {
 	defer func(begin time.Time) {
-		lvs := []string{"method", "sum", "error", "false"}
+		lvs := []string{"method", "multipe operations", "error", "false"}
 		mw.requestCount.With(lvs...).Add(1)
 		mw.requestLatency.With(lvs...).Observe(time.Since(begin).Seconds())
 	}(time.Now())
 
-	output = mw.next.Call(ctx, Param1, Param2)
+	output, err = mw.next.Call(ctx, operations)
 	return
 }

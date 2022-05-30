@@ -30,7 +30,7 @@ https://localhost:9000/
 - Login credentials can be retrieved using the following commnad
   ```kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo```
    
-  Example result :
+  Example result:  
   ```cWmlpuNFDdXCZHyd```
 
   More information in the credentials guide. https://argo-cd.readthedocs.io/en/stable/getting_started/#4-login-using-the-cli

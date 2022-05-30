@@ -19,24 +19,31 @@ func configEntries() []configurator.ConfigEntry {
 			Description:  "Url of the Sum Service",
 			DefaultValue: "http://localhost:8081/",
 		},
+		{
+			VariableName: "uri_subtract_service",
+			Description:  "Url of the Subtract Service",
+			DefaultValue: "http://localhost:8082/",
+		},
 	}
 }
 
 type APIConfig struct {
-	Port          string
-	UriSumService string
+	Port               string
+	UriSumService      string
+	UriSubtractService string
 }
 
 func GetAPIConfig() *APIConfig {
 
-	variables, err := configurator.ConfigureViper(configEntries())
+	variables, err := configurator.LoadConfig(configEntries())
 
 	if err != nil {
 		fmt.Println(err)
 	}
 
 	return &APIConfig{
-		Port:          variables["port"].(string),
-		UriSumService: variables["uri_sum_service"].(string),
+		Port:               variables["port"].(string),
+		UriSumService:      variables["uri_sum_service"].(string),
+		UriSubtractService: variables["uri_subtract_service"].(string),
 	}
 }

@@ -13,6 +13,8 @@ Microservices Patterns, to know how use them in diferent situations.
 
 # Summary
 
+## Infrastructure
+
 [1 - Install Minikube](.documentation/1-install%20minikube.md)  
 [2 - Install ArgoCD](.documentation/2-install%20argocd.md)  
 [2.1 - Configure ArgoCD](.documentation/2.1-configure%20argocd.md)  

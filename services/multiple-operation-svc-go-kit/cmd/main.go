@@ -6,7 +6,9 @@ import (
 
 	"github.com/go-kit/log"
 
+	subtractClient "multiple-operation-svc-go-kit/internal/clients/subtract-client"
 	sumClient "multiple-operation-svc-go-kit/internal/clients/sum-client"
+
 	"multiple-operation-svc-go-kit/internal/endpoint"
 	"multiple-operation-svc-go-kit/internal/handler"
 	"multiple-operation-svc-go-kit/internal/service"
@@ -45,9 +47,10 @@ func main() {
 	}, []string{})
 
 	//creating clients
-	sClient := sumClient.NewClient(apiConfig.UriSumService)
+	sumClient := sumClient.NewClient(apiConfig.UriSumService)
+	subtractClient := subtractClient.NewClient(apiConfig.UriSubtractService)
 
-	svc := service.NewService(sClient)
+	svc := service.NewService(sumClient, subtractClient)
 	svc = service.NewLoggingMiddleware(logger, svc)
 	svc = service.NewInstrumentingMiddleware(requestCount, requestLatency, countResult, svc)
 

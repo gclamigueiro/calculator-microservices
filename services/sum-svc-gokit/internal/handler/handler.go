@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"net/http"
-
 	"github.com/gclamigueiro/sum-svc-gokit/internal/entity"
 	"github.com/go-kit/kit/endpoint"
 	httptransport "github.com/go-kit/kit/transport/http"
@@ -12,18 +11,18 @@ import (
 
 func NewHttpHandler(sumEndpoint endpoint.Endpoint) {
 
-	sumHandler := httptransport.NewServer(
+	handler := httptransport.NewServer(
 		sumEndpoint,
 		decodeRequest,
 		encodeResponse,
 	)
 
-	http.Handle("/", sumHandler)
+	http.Handle("/", handler)
 
 }
 
 func decodeRequest(_ context.Context, r *http.Request) (interface{}, error) {
-	var request entity.SumRequest
+	var request entity.Request
 	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
 		return nil, err
 	}

@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"net/http"
-	"{{.APIName}}/internal/entity"
+	"{{.APINamespace}}{{.APIName}}/internal/entity"
 	"github.com/go-kit/kit/endpoint"
 	httptransport "github.com/go-kit/kit/transport/http"
 )

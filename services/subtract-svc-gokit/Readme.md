@@ -1,5 +1,6 @@
-**Substrat Microservice with go-kit**
+**Microservice github.com/gclamigueiro/subtract-svc-gokit**
 
+Generated with the Template Generator
 
 ***Run the example***  
 Execute the application

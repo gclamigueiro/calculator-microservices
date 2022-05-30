@@ -6,15 +6,17 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"multiple-operation-svc-go-kit/internal/clients/middlewares"
 	"net/http"
 	"net/url"
+	"time"
 
 	"github.com/go-kit/kit/endpoint"
 	httptransport "github.com/go-kit/kit/transport/http"
 )
 
 type Client interface {
-	Sum(ctx context.Context, request interface{}) (int, error)
+	Call(ctx context.Context, request interface{}) (int, error)
 }
 
 type client struct {
@@ -27,8 +29,9 @@ func NewClient(url string) Client {
 	}
 }
 
-func (client *client) Sum(ctx context.Context, request interface{}) (int, error) {
+func (client *client) Call(ctx context.Context, request interface{}) (int, error) {
 	resp, err := client.ep(ctx, request)
+	fmt.Println("SUM CLIENT", resp, err)
 	if err != nil {
 		return 0, err
 	}
@@ -42,19 +45,34 @@ func makeEndpoint(uri string) endpoint.Endpoint {
 		fmt.Println(err)
 	}
 
-	return httptransport.NewClient(
+	opts := []httptransport.ClientOption{
+		httptransport.SetClient(&http.Client{Timeout: 10 * time.Second}),
+	}
+
+	ep := httptransport.NewClient(
 		"POST",
 		url,
 		encodeRequest,
 		decodeResponse,
+		opts...,
 	).Endpoint()
+	ep = middlewares.CircuitBreakerMiddleware()(ep)
+	return ep
+}
+
+func encodeRequest(_ context.Context, r *http.Request, request interface{}) error {
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(request); err != nil {
+		return err
+	}
+	r.Body = ioutil.NopCloser(&buf)
+	return nil
 }
 
 func decodeResponse(ctx context.Context, r *http.Response) (response interface{}, err error) {
 
 	buf := new(bytes.Buffer)
 	buf.ReadFrom(r.Body)
-	fmt.Println(r.StatusCode, buf.String())
 	if r.StatusCode != http.StatusOK {
 		responseBody := buf.String()
 		return nil, fmt.Errorf(responseBody)
@@ -67,13 +85,4 @@ func decodeResponse(ctx context.Context, r *http.Response) (response interface{}
 	}
 
 	return resp, nil
-}
-
-func encodeRequest(_ context.Context, r *http.Request, request interface{}) error {
-	var buf bytes.Buffer
-	if err := json.NewEncoder(&buf).Encode(request); err != nil {
-		return err
-	}
-	r.Body = ioutil.NopCloser(&buf)
-	return nil
 }

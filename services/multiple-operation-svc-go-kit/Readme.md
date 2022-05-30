@@ -1,15 +1,23 @@
-**Microservice multiple-operation-svc-go-kit**
+# multiple-operation-svc-go-kit Microservice
 
-Generated with the Template Generator
+the service recibe an array of operations and call the correspondent sevice
 
-***Run the example***  
-Execute the application
+## Dependencies
+- sum-svc-gokit-svc
+- subtract-svc-gokit-svc
 
+## Test de Service
+
+### Port Forward to dependant services
+kubectl -n dev port-forward service/sum-svc-gokit-svc 8081:8080
+kubectl -n dev port-forward service/subtract-svc-gokit-svc 8082:8080
+
+### Run the service 
 ```
 go run  .\cmd\main.go
 ```
 
-Request example
+### example request 
 
-curl -XPOST -d'{"param1":5, "param2": 3}' localhost:8080/v1/calculator/service
+curl -XPOST -d'{"operations":[{"param1":5, "param2": 3, "operation":"+"},{"param1":5, "param2": 3, "operation":"+"} ]}' localhost:8080/v1/calculator/service
 

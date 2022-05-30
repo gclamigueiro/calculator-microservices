@@ -1,10 +1,12 @@
 name: {{.APIName}}
 
-## define the image to execute with the Deployment 
 image:
-  tag: latest
+  name: usernameDocker/{{.APIName}}
+  tag:  latest
 
 config:
   port: 8080
 
-path: "/v1/calculator/service"
+ingress:
+  path: "/v1/calculator/service"
+

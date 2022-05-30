@@ -1,4 +1,4 @@
-**Microservice {{.APIName}}**
+**Microservice {{.APINamespace}}{{.APIName}}**
 
 Generated with the Template Generator
 

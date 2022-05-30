@@ -13,3 +13,7 @@ A Helm chart is composed of the following files:
     • values.yaml - default input configuration file for the chart. If no other values file is supplied, the parameters in this file will be used. 
 
 ![Helm Chart Structure](./images/helm-chart-structure.PNG "Helm Chart Structure")    
+
+# Helm in ArgoCD
+
+The ArgoCD Application resource has the possibility to set helm as a source for creating the kubernetes resources

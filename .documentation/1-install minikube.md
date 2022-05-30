@@ -25,4 +25,4 @@ if you don have kubectl, you can use this command.
 
 ``` minikube kubectl -- get po -A ```	
 
-you can see how to install it in this page https://kubernetes.io/docs/tasks/tools/
+you can see how to install it in this page [Installing Kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl)

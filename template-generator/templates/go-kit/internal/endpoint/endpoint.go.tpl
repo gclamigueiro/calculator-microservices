@@ -2,15 +2,18 @@ package endpoint
 
 import (
 	"context"
-	"{{.APIName}}/internal/entity"
-	"{{.APIName}}/internal/service"
+	"{{.APINamespace}}{{.APIName}}/internal/entity"
+	"{{.APINamespace}}{{.APIName}}/internal/service"
 	"github.com/go-kit/kit/endpoint"
 )
 
 func MakeEndpoint(svc service.Service) endpoint.Endpoint {
-	return func(_ context.Context, request interface{}) (interface{}, error) {
+	return func(ctx context.Context, request interface{}) (interface{}, error) {
 		req := request.(entity.Request)
-		v := svc.Call(req.Param1, req.Param2)
+		v, err := svc.Call(ctx, req.Param1, req.Param2)
+		if(err != nil) {
+			return entity.Response{R: 0, Err: err.Error()}, nil
+		}
 		return entity.Response{R: v, Err: ""}, nil
 	}
 }

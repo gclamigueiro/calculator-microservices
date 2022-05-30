@@ -1,15 +1,21 @@
 package service
 
-type SumService interface {
-	Sum(A, B int) int
+import (
+	"context"
+)
+
+// SumService provides operations on strings.
+type Service interface {
+	Call(ctx context.Context, Param1, Param2 int) (int, error)
 }
 
-type sumService struct{}
+// sumService is a concrete implementation of SumService
+type service struct{}
 
-func NewSumService() SumService {
-	return &sumService{}
+func NewService() Service {
+	return &service{}
 }
 
-func (sumService) Sum(A, B int) int {
-	return A + B
+func (s *service) Call(ctx context.Context, A, B int) (int, error) {
+	return A + B, nil
 }

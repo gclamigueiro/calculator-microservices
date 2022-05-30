@@ -6,9 +6,10 @@ import (
 
 	"github.com/go-kit/log"
 
-	"{{.APIName}}/internal/endpoint"
-	"{{.APIName}}/internal/handler"
-	"{{.APIName}}/internal/service"
+	"{{.APINamespace}}{{.APIName}}/internal/endpoint"
+	"{{.APINamespace}}{{.APIName}}/internal/handler"
+	"{{.APINamespace}}{{.APIName}}/internal/service"
+	apiConfig "{{.APINamespace}}{{.APIName}}/cmd/config"
 
     kitprometheus "github.com/go-kit/kit/metrics/prometheus"
 	stdprometheus "github.com/prometheus/client_golang/prometheus"
@@ -16,6 +17,8 @@ import (
 )
 
 func main() {
+
+	apiConfig := apiConfig.GetAPIConfig()
 
 	logger := log.NewLogfmtLogger(os.Stderr)
 
@@ -50,5 +53,5 @@ func main() {
 
 	http.Handle("/metrics", promhttp.Handler())
 
-	logger.Log("exit", http.ListenAndServe(":8080", nil))
+	logger.Log("exit", http.ListenAndServe(":"+apiConfig.Port, nil))
 }

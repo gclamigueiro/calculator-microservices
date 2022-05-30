@@ -34,6 +34,16 @@ func main() {
 	parameters = append(
 		parameters,
 		cliHandler.NewCLIHandlerParameter(
+			"text",                                // type of input
+			"APINamespace",                        // parameter name
+			"Input the namespace of the service ", // parameter label
+			"",                                    // default value
+			[]string{"github.com/username/"},      // examples
+			cliHandler.EndWith("/")))              // validation
+
+	parameters = append(
+		parameters,
+		cliHandler.NewCLIHandlerParameter(
 			"text",                           // type of input
 			"APIName",                        // parameter name
 			"Input the name of the service ", // parameter label

@@ -1,6 +1,7 @@
 # Template Generator
 
-This app helps to generate a service template. 
+Esta aplicacion permite generar un boilerplate de microservicio. Se tiene en cuenta cross-cutting concerns como configuration, logging. La idea es poner todo lo que sea general
+a los microservicios ir actualizandolo en la plantilla
 
 https://microservices.io/patterns/microservice-chassis.html
 
