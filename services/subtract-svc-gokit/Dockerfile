@@ -2,7 +2,7 @@ FROM golang:alpine AS build
 LABEL maintainer=gclamigueiro
 
 WORKDIR /app
-COPY ./services/github.com/gclamigueiro/subtract-svc-gokit .
+COPY ./services/subtract-svc-gokit .
 RUN go build ./cmd/main.go
 
 ENTRYPOINT [ "/app/main" ][]
