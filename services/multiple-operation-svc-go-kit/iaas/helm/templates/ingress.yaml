@@ -12,7 +12,8 @@ spec:
         paths:
           - path: {{ .Values.ingress.path }}
             backend:
-              serviceName: {{ .Values.name }}-svc
-              servicePort: {{ .Values.config.port }}
+              service:
+                name: {{ .Values.name }}-svc
+                port: {{ .Values.config.port }}
 
 
