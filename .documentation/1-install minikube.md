@@ -10,7 +10,6 @@ https://docs.docker.com/desktop/
 An easy way to install minikube is following de tutorial in the oficcial website.  
 https://minikube.sigs.k8s.io/docs/start/
 
-
 ## Test installation
 
 Run the comand 
@@ -26,3 +25,20 @@ if you don have kubectl, you can use this command.
 ``` minikube kubectl -- get po -A ```	
 
 you can see how to install it in this page [Installing Kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl)
+
+
+## Enable an Ingress Controller
+
+If you want to access your services from outside the cluster, you will nedd and Ingress controller. You can enable the NGINX Ingress controller in Minikube running the following command:
+
+```minikube addons enable ingress```
+
+More information:
+
+[Enable the Ingress controller](https://kubernetes.io/docs/tasks/access-application-cluster/ingress-minikube/)
+
+After that you can execute ```minikube tunnel```  and the ingress resources will be available at ```127.0.0.1``` 
+
+
+https://127.0.0.1:53879
+

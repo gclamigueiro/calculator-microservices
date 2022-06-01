@@ -18,7 +18,7 @@ func NewHttpHandler(sumEndpoint endpoint.Endpoint) {
 		encodeResponse,
 	)
 
-	http.Handle("/v1/calculator/service", handler)
+	http.Handle("/v1/calculator/multiple-operation", handler)
 
 }
 

@@ -6,7 +6,7 @@ In a real scenarios this images would be saved in a private registry.
 
 ## Monorepo Strategy
 
-In this example we are using a monorepo strategy. So all our microservices will be in the same reposiroy under the services folder. So we need a Github Action job for each service
+In this example we are using a monorepo strategy. So all our microservices will be in the same repository under the services folder. So we need a Github Action job for each service.
 
 ## Steps
 

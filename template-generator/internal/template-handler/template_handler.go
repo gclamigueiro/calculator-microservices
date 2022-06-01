@@ -1,6 +1,7 @@
 package template_handler
 
 import (
+	"bytes"
 	"errors"
 	"io/fs"
 	"io/ioutil"
@@ -84,13 +85,21 @@ func (f *fileProcessor) proccessDirectory(src string, files []fs.FileInfo, conte
 
 func (f *fileProcessor) ApplyTemplateToFile(workPath string, templateContext interface{}) error {
 
+	ctx := templateContext.(map[string]string)
+
 	resultingFileName := workPath[:len(workPath)-4]
+
+	// parsing file name, in case it has a variable
+	nameTemplate, _ := template.New("name").Parse(resultingFileName)
+	buf := new(bytes.Buffer)
+	nameTemplate.Execute(buf, ctx)
+	resultingFileName = buf.String()
+
+	// creating file
 	resultingFile, err := os.Create(resultingFileName)
 	if err != nil {
 		return errors.New(ErrCreatingFileFromTemplate + " // " + err.Error())
 	}
-
-	ctx := templateContext.(map[string]string)
 
 	// proccessing template
 	// processedContent, err := f.ProcessFile(workPath, templateContext)
