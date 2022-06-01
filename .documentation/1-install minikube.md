@@ -36,9 +36,3 @@ If you want to access your services from outside the cluster, you will nedd and 
 More information:
 
 [Enable the Ingress controller](https://kubernetes.io/docs/tasks/access-application-cluster/ingress-minikube/)
-
-After that you can execute ```minikube tunnel```  and the ingress resources will be available at ```127.0.0.1``` 
-
-
-https://127.0.0.1:53879
-
