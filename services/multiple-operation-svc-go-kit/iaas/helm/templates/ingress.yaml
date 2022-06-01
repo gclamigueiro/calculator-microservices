@@ -7,13 +7,12 @@ metadata:
 
 spec:
   rules:
-    - host: "minikube-cluster.com"  
+    - host: "minikube-cluster.com"
     - http:
         paths:
           - path: {{ .Values.ingress.path }}
             backend:
-              service:
-                name: {{ .Values.name }}-svc
-                port: {{ .Values.config.port }}
+              serviceName: {{ .Values.name }}-svc
+              servicePort: {{ .Values.config.port }}
 
 
