@@ -36,3 +36,5 @@ If you want to access your services from outside the cluster, you will nedd and 
 More information:
 
 [Enable the Ingress controller](https://kubernetes.io/docs/tasks/access-application-cluster/ingress-minikube/)
+
+Create default ingress class
