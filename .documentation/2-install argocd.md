@@ -36,7 +36,7 @@ https://localhost:9000/
   ```kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo```
    
   Example result:  
-  ```yMR5sn43uyftf-8T```
+  ```26DLzJNJ1W4lvm6p```
 
   More information in the credentials guide. https://argo-cd.readthedocs.io/en/stable/getting_started/#4-login-using-the-cli
 
