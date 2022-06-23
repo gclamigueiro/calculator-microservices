@@ -31,7 +31,6 @@ func NewClient(url string) Client {
 
 func (client *client) Call(ctx context.Context, request interface{}) (int, error) {
 	resp, err := client.ep(ctx, request)
-	fmt.Println("SUM CLIENT", resp, err)
 	if err != nil {
 		return 0, err
 	}

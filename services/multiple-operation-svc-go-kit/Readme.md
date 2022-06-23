@@ -19,5 +19,5 @@ go run  .\cmd\main.go
 
 ### example request 
 
-curl -XPOST -d'{"operations":[{"param1":5, "param2": 3, "operation":"+"},{"param1":5, "param2": 3, "operation":"+"} ]}' localhost:8080/v1/calculator/service
+curl -XPOST -d'{"expression": "23+4+2-2+5+1"}' localhost:8080/v1/calculator/service
 

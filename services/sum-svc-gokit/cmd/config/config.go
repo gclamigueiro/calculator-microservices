@@ -12,7 +12,7 @@ func configEntries() []configurator.ConfigEntry {
 			VariableName: "port",
 			Description:  "Port used to listen for incoming connections",
 			Shortcut:     "p",
-			DefaultValue: "8080",
+			DefaultValue: "8081",
 		},
 	}
 }

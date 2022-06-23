@@ -12,7 +12,7 @@ func configEntries() []configurator.ConfigEntry {
 			VariableName: "port",
 			Description:  "Port used to listen for incoming connections",
 			Shortcut:     "p",
-			DefaultValue: "8080",
+			DefaultValue: "8082",
 		},
 		{
 			VariableName: "uri_service",
@@ -23,7 +23,7 @@ func configEntries() []configurator.ConfigEntry {
 }
 
 type APIConfig struct {
-	Port          string
+	Port       string
 	UriService string
 }
 
@@ -36,7 +36,7 @@ func GetAPIConfig() *APIConfig {
 	}
 
 	return &APIConfig{
-		Port:          variables["port"].(string),
+		Port:       variables["port"].(string),
 		UriService: variables["uri_service"].(string),
 	}
 }

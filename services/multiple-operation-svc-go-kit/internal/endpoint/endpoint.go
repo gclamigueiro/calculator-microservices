@@ -11,14 +11,12 @@ import (
 func MakeEndpoint(svc service.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
 		req := request.(entity.Request)
-		v, err := svc.Call(ctx, req.Operations)
+		v, err := svc.Call(ctx, req.Expression)
 
-		errorsString := []string{}
-
-		for _, e := range err {
-			errorsString = append(errorsString, e.Error())
+		if err != nil {
+			return nil, err
 		}
 
-		return entity.Response{R: v, Err: errorsString}, nil
+		return entity.Response{R: v}, nil
 	}
 }
