@@ -4,6 +4,8 @@ This application allows to generate a microservice boilerplate. Cross-cutting co
 
 Several templates can be included to speed up the initial setup process of a service
 
+This project was developed for study purposes only. To use templates to create your projects is better to use a tool like [CookieCutter](https://github.com/cookiecutter/cookiecutter) for example
+
 ## Related Patterns
 https://microservices.io/patterns/service-template.html
  
