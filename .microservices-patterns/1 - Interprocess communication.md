@@ -5,7 +5,7 @@
 
 ### Synchronous Request/response
 
-In this case the client sends a request and asumme that a response will arrive in a timely fashion. two mechanism could be an HTTP-based REST or gRPC
+In this case the client sends a request and asumme that a response will arrive in a timely fashion. the two most common mechanisms could be an HTTP-based REST or gRPC.
 
 ### Drawbacks
 
@@ -16,10 +16,10 @@ service, there is an ever-present risk of partial failure. And, the client is bl
 
 In the service ```multiple-operation-svc-go-kit``` we called to another services using HTTP tranports, so our procces is blocked while we are waiting for a response. 
 
-
 ### Related Patterns
-
 #### Circuit breaker
+
+The Circuit Breaker pattern, can prevent an application from repeatedly trying to execute an operation that's likely to fail.
 
 [Circuit breaker](./1.1%20-%20Circuit%20Breaker%20Pattern%20.md)  
 

@@ -30,8 +30,6 @@ func NewService(sumClient sumClient.Client, subtractClient subtractClient.Client
 
 func (s *service) Call(ctx context.Context, expression string) (int, error) {
 
-	// expression := "123 + 23 - 45 + 67 - 89"
-
 	values := make([]int, 0)
 	ops := make([]string, 0)
 
