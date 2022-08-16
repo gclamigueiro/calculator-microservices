@@ -28,7 +28,7 @@ you can see how to install it in this page [Installing Kubectl](https://kubernet
 
 
 
-## Accesing services outside the cluste
+## Accesing services outside the cluster
 
 ### Using minikube service
 
