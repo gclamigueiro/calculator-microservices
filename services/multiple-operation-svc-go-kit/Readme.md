@@ -9,8 +9,8 @@ the service recibe an array of operations and call the correspondent sevice
 ## Test de Service
 
 ### Port Forward to dependant services
-kubectl -n dev port-forward service/sum-svc-gokit-svc 8081:8080
-kubectl -n dev port-forward service/subtract-svc-gokit-svc 8082:8080
+```kubectl -n dev port-forward service/sum-svc-gokit-svc 8081:8080```  
+```kubectl -n dev port-forward service/subtract-svc-gokit-svc 8082:8080```
 
 ### Run the service 
 ```
